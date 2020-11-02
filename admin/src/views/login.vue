@@ -101,13 +101,9 @@
             // console.log("login");
 
             // 从缓存中获取记住的用户名密码，如果获取不到，说明上一次没有勾选“记住我”
-            let rememberUser = LocalStorage.get(LOCAL_KEY_REMEMBER_USER);
-            if (rememberUser) {
-                _this.user = rememberUser;
-            }
+
 
             // 初始时加载一次验证码图片
-            _this.loadImageCode();
         },
         methods: {
             login () {
