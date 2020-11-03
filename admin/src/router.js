@@ -21,11 +21,11 @@ export default new Router({
         component: Login
     },{
       path: "/",
-      mame: "admin",
+      name: "admin",
       component: Admin,
         children: [{
             path: "welcome",
-            mame: "welcome",
+            name: "welcome",
             component: Welcome
         },{
           path: "business/chapter",
