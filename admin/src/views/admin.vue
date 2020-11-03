@@ -320,10 +320,7 @@
     </div>
 
     <div class="main-container ace-save-state" id="main-container">
-
-
       <div id="sidebar" class="sidebar                  responsive                    ace-save-state">
-
 
         <div class="sidebar-shortcuts" id="sidebar-shortcuts">
           <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
