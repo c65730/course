@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @RestController
 @RequestMapping("/admin/chapter")
@@ -28,5 +27,13 @@ public class ChapterController {
         LOG.info("pageDto:{}",pageDto);
         chapterService.list(pageDto);
         return pageDto;
+    }
+
+    @RequestMapping("/save")
+    public ChapterDto save(@RequestBody ChapterDto chapterDto){
+
+        LOG.info("chapterDto:{}",chapterDto);
+        chapterService.save(chapterDto);
+        return chapterDto;
     }
 }
