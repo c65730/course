@@ -111,7 +111,6 @@
           size: _this.$refs.pagination.size
         }).then((response)=>{
           Loading.hide();
-          console.log("查询大章列表结果：", response);
           let resp = response.data;
           _this.chapters = resp.content.list;
           _this.$refs.pagination.render(page, resp.content.total);
@@ -140,7 +139,6 @@
         Loading.show();
         _this.$ajax.post("http://127.0.0.1:9000/business/admin/chapter/save",
         _this.chapter).then((response)=>{
-          console.log("保存大章记录：", response);
           Loading.hide();
           let resp = response.data;
           if(resp.success){
