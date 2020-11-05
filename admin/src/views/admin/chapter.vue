@@ -33,7 +33,7 @@
             <button v-on:click="edit(chapter)" class="btn btn-xs btn-info">
               <i class="ace-icon fa fa-pencil bigger-120"></i>
             </button>
-            <button class="btn btn-xs btn-danger">
+            <button v-on:click="del(chapter.id)" class="btn btn-xs btn-danger">
               <i class="ace-icon fa fa-trash-o bigger-120"></i>
             </button>
           </div>
@@ -116,6 +116,19 @@
 
         })
       },
+      del(id){
+        let _this = this;
+        Confirm.show("删除大章后不可恢复，确认删除？",function () {
+          _this.$ajax.delete("http://127.0.0.1:9000/business/admin/chapter/delete/"+id).then((response)=>{
+            console.log("删除大章记录：", response);
+            let resp = response.data;
+            if(resp.success){
+              _this.list(1);
+              Toast.success("删除成功！")
+            }
+          })
+        });
+      },
       save(page){
         let _this = this;
         _this.$ajax.post("http://127.0.0.1:9000/business/admin/chapter/save",
@@ -125,6 +138,9 @@
           if(resp.success){
             $("#form-modal").modal("hide");
             _this.list(1);
+            Toast.success("保存成功！");
+          }else {
+            Toast.warning(resp.message)
           }
         })
       }

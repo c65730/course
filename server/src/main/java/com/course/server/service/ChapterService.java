@@ -10,12 +10,10 @@ import com.course.server.util.CopyUtil;
 import com.course.server.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -61,5 +59,9 @@ public class ChapterService {
     private void update(Chapter chapter){
 
         chapterMapper.updateByPrimaryKey(chapter);
+    }
+
+    public void delete(String id){
+        chapterMapper.deleteByPrimaryKey(id);
     }
 }
