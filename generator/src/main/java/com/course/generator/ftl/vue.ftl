@@ -17,7 +17,7 @@
     <table id="simple-table" class="table  table-bordered table-hover">
       <thead>
       <tr>
-<#list fieldList as field>
+        <#list fieldList as field>
           <#if field.nameHump!="createdAt" && field.nameHump!="updatedAt">
         <th>${field.nameCn}</th>
           </#if>
