@@ -28,7 +28,6 @@
       <tr>
         <th>ID</th>
         <th>名称</th>
-        <th>课程ID</th>
         <th>操作</th>
       </tr>
       </thead>
@@ -37,14 +36,16 @@
       <tr v-for="chapter in chapters">
         <td>{{chapter.id}} </td>
         <td>{{chapter.name}} </td>
-        <td>{{chapter.courseId}} </td>
         <td>
           <div class="hidden-sm hidden-xs btn-group">
-            <button v-on:click="edit(chapter)" class="btn btn-xs btn-info">
-              <i class="ace-icon fa fa-pencil bigger-120"></i>
+            <button v-on:click="toSection(chapter)" class="btn btn-white btn-xs btn-info btn-round">
+              小节
+            </button>&nbsp;
+            <button v-on:click="edit(chapter)" class="btn btn-white btn-xs btn-info btn-round">
+              编辑
             </button>
-            <button v-on:click="del(chapter.id)" class="btn btn-xs btn-danger">
-              <i class="ace-icon fa fa-trash-o bigger-120"></i>
+            <button v-on:click="del(chapter.id)" class="btn btn-white btn-xs btn-warning btn-round">
+              删除
             </button>
           </div>
         </td>
@@ -167,6 +168,14 @@
             Toast.warning(resp.message)
           }
         })
+      },
+      /**
+       * 点击【小节】
+       */
+      toSection(chapter) {
+        let _this = this;
+        SessionStorage.set(SESSION_KEY_CHAPTER, chapter);
+        _this.$router.push("/business/section");
       }
     }
   }
