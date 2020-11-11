@@ -24,15 +24,12 @@ public class CategoryService {
     /**
      * 列表查询
      */
-    public void list(PageDto pageDto) {
-        PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
+    public List<CategoryDto> all() {
         CategoryExample categoryExample = new CategoryExample();
         categoryExample.setOrderByClause("sort asc");
         List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
-        PageInfo<Category> pageInfo = new PageInfo<>(categoryList);
-        pageDto.setTotal(pageInfo.getTotal());
         List<CategoryDto> categoryDtoList = CopyUtil.copyList(categoryList, CategoryDto.class);
-        pageDto.setList(categoryDtoList);
+        return  categoryDtoList;
     }
 
     /**
