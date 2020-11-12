@@ -427,13 +427,13 @@
                 </router-link>
                 <b class="arrow"></b>
               </li>
-              <!--<li class="active"  id="business-chapter-sidebar">-->
-                <!--<router-link to="/business/chapter">-->
-                  <!--<i class="menu-icon fa fa-caret-right"></i>-->
-                  <!--大章管理-->
-                <!--</router-link>-->
-                <!--<b class="arrow"></b>-->
-              <!--</li>-->
+              <li class="active"  id="business-teacher-sidebar">
+                <router-link to="/business/teacher">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  讲师管理
+                </router-link>
+                <b class="arrow"></b>
+              </li>
               <!--<li class=""  id="business-section-sidebar">-->
                 <!--<router-link to="/business/section">-->
                   <!--<i class="menu-icon fa fa-caret-right"></i>-->
