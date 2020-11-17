@@ -99,7 +99,7 @@
                 <label class="col-sm-2 control-label">封面</label>
                 <div class="col-sm-10">
                   <file v-bind:input-id="'image-upload'"
-                        v-bind:text="'上传'"
+                        v-bind:text="'上传封面'"
                         v-bind:suffixs="['jpg', 'jpeg', 'png','gif']"
                         v-bind:use="FILE_USE.COURSE.key"
                         v-bind:after-upload="afterUpload"></file>
@@ -254,7 +254,8 @@
           oldSort: 0,
           newSort: 0
         },
-        teachers: []
+        teachers: [],
+        files: [],
       }
     },
     mounted: function() {
@@ -488,7 +489,9 @@
         let _this = this;
         let image = resp.content.path;
         _this.course.image = image;
-      }
+      },
+
+
     }
   }
 </script>

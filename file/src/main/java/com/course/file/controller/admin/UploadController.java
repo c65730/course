@@ -41,8 +41,6 @@ public class UploadController {
         LOG.info(file.getOriginalFilename());
         LOG.info(String.valueOf(file.getSize()));
 
-        ResponseDto responseDto = new ResponseDto();
-
         // 保存文件到本地
         FileUseEnum useEnum = FileUseEnum.getByCode(use);
         String key = UuidUtil.getShortUuid();
@@ -72,6 +70,7 @@ public class UploadController {
         fileDto.setUse(use);
         fileService.save(fileDto);
 
+        ResponseDto responseDto = new ResponseDto();
         fileDto.setPath(FILE_DOMAIN + path);
         responseDto.setContent(fileDto);
 
