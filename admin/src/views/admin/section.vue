@@ -46,6 +46,9 @@
         <td>{{section.vod}}</td>
       <td>
         <div class="hidden-sm hidden-xs btn-group">
+          <button v-on:click="play(section)" class="btn btn-xs btn-info">
+            <i class="ace-icon fa fa-video-camera bigger-120"></i>
+          </button>
           <button v-on:click="edit(section)" class="btn btn-xs btn-info">
             <i class="ace-icon fa fa-pencil bigger-120"></i>
           </button>
@@ -138,6 +141,8 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+    <modal-player ref="modalPlayer"></modal-player>
   </div>
 </template>
 
@@ -145,8 +150,9 @@
   import Pagination from "../../components/pagination";
   import BigFile from "../../components/big-file";
   import Player from "../../components/player";
+  import ModalPlayer from "../../components/modal-player";
   export default {
-    components: {Pagination,BigFile,Player},
+    components: {Pagination,BigFile,Player,ModalPlayer},
     name: "business-section",
     data: function() {
       return {
@@ -278,6 +284,15 @@
           _this.section.time = parseInt(ele.duration, 10);
         }, 1000);
       },
+
+      /**
+       * 播放视频
+       * @param section
+       */
+      play(section) {
+        let _this = this;
+        _this.$refs.modalPlayer.playUrl(section.video);
+      }
     }
   }
 </script>
