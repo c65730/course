@@ -65,7 +65,8 @@ public class UserService {
      * 更新
      */
     private void update(User user) {
-        userMapper.updateByPrimaryKey(user);
+        user.setPassword(null); // 编辑用户不修改密码
+        userMapper.updateByPrimaryKeySelective(user);
     }
 
     /**
@@ -90,5 +91,17 @@ public class UserService {
         }else {
             return userList.get(0);
         }
+    }
+
+    /**
+     *  重置密码
+     * @param userDto
+     */
+    public void savePasswoed(UserDto userDto){
+
+        User user = new User();
+        user.setId(userDto.getId());
+        user.setPassword(userDto.getPassword());
+        userMapper.updateByPrimaryKeySelective(user);
     }
 }
