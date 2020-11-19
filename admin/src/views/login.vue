@@ -113,8 +113,13 @@
             login () {
               let _this = this;
 
-              let passwordShow = _this.user.password;
-              _this.user.password = hex_md5(_this.user.password + KEY);
+              // 如果密码是从缓存中带出来的，不重新加密
+              let md5 = hex_md5( _this.user.password);
+              let rememberUser = LocalStorage.get(LOCAL_KEY_REMEMBER_USER) || {};
+              if(md5 !== rememberUser.md5){
+                _this.user.password = hex_md5(_this.user.password + KEY);
+              }
+
               Loading.show();
               _this.$ajax.post(process.env.VUE_APP_SERVER + '/system/admin/user/login', _this.user).then((response)=>{
                 Loading.hide();
@@ -123,13 +128,18 @@
                   console.log("登录成功：",resp.content);
                   let loginUser = resp.content;
                   Tool.setLoginUser(resp.content);
-                  // SessionStorage.set("USER",resp.content);
+                  // 判断记住我
                   if(_this.remember){
+                    // 如果勾选记住我，则将用户名和密码保存到本地缓存中
+                    // 保存密码密文，并保存密文md5 用于检测密码是否被重新输入
+                    let md5 = hex_md5( _this.user.password);
                     LocalStorage.set(LOCAL_KEY_REMEMBER_USER,{
                       loginName: loginUser.loginName,
-                      password: passwordShow
+                      password:  _this.user.password,
+                      md5: md5
                     });
                   }else {
+                    // 没有勾选，清除本地缓存
                     LocalStorage.set(LOCAL_KEY_REMEMBER_USER,null);
                   }
                   _this.$router.push("/welcome")
