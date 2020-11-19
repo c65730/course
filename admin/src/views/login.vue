@@ -104,11 +104,16 @@
 
 
             // 初始时加载一次验证码图片
+          let rememberUser = LocalStorage.get(LOCAL_KEY_REMEMBER_USER);
+          if(rememberUser){
+            _this.user = rememberUser;
+          }
         },
         methods: {
             login () {
               let _this = this;
 
+              let passwordShow = _this.user.password;
               _this.user.password = hex_md5(_this.user.password + KEY);
               Loading.show();
               _this.$ajax.post(process.env.VUE_APP_SERVER + '/system/admin/user/login', _this.user).then((response)=>{
@@ -116,13 +121,22 @@
                 let resp = response.data;
                 if (resp.success) {
                   console.log("登录成功：",resp.content);
+                  let loginUser = resp.content;
                   Tool.setLoginUser(resp.content);
                   // SessionStorage.set("USER",resp.content);
+                  if(_this.remember){
+                    LocalStorage.set(LOCAL_KEY_REMEMBER_USER,{
+                      loginName: loginUser.loginName,
+                      password: passwordShow
+                    });
+                  }else {
+                    LocalStorage.set(LOCAL_KEY_REMEMBER_USER,null);
+                  }
                   _this.$router.push("/welcome")
                 } else {
                   Toast.warning(resp.message)
                 }
-              })
+              });
             }
         }
     }
