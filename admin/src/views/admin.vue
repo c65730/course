@@ -281,11 +281,6 @@
             <li class="light-blue dropdown-modal">
               <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                 <img class="nav-user-photo" src="../../public/ace/assets/images/avatars/user.jpg" alt="Jason's Photo" />
-                <span class="user-info">
-									<small>Welcome,</small>
-									{{loginUser.name}}
-								</span>
-
                 <i class="ace-icon fa fa-caret-down"></i>
               </a>
 
@@ -293,23 +288,23 @@
                 <li>
                   <a href="#">
                     <i class="ace-icon fa fa-cog"></i>
-                    Settings
+                    系统设置
                   </a>
                 </li>
 
                 <li>
                   <a href="profile.html">
                     <i class="ace-icon fa fa-user"></i>
-                    Profile
+                    个人信息
                   </a>
                 </li>
 
                 <li class="divider"></li>
 
                 <li>
-                  <a href="#">
+                  <a v-on:click="logout()" href="#">
                     <i class="ace-icon fa fa-power-off"></i>
-                    Logout
+                    退出登录
                   </a>
                 </li>
               </ul>
@@ -575,6 +570,21 @@
           parentLi.siblings().find("li").removeClass("active");
           parentLi.addClass("open active");
         }
+      },
+
+      logout(){
+        let _this = this;
+        Loading.show();
+        _this.$ajax.get(process.env.VUE_APP_SERVER + '/system/admin/user/logout').then((response)=>{
+          Loading.hide();
+          let resp = response.data;
+          if (resp.success) {
+            Tool.setLoginUser(null);
+            _this.$router.push("/login")
+          } else {
+            Toast.warning(resp.message)
+          }
+        });
       }
 
     }
