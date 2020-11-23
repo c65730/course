@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -68,6 +67,4 @@ public class RoleUserService {
     public void delete(String id) {
         roleUserMapper.deleteByPrimaryKey(id);
     }
-
-
 }
