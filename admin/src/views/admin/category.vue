@@ -268,7 +268,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .active td {
     background-color: #d6e9c6 !important;
   }

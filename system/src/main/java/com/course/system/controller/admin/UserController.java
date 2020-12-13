@@ -1,7 +1,9 @@
 package com.course.system.controller.admin;
 
+import com.alibaba.fastjson.JSON;
 import com.course.server.dto.*;
 import com.course.server.service.UserService;
+import com.course.server.util.UuidUtil;
 import com.course.server.util.ValidatorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.concurrent.TimeUnit;
 
 //@CrossOrigin(allowCredentials ="true")
 @RestController
@@ -95,12 +98,12 @@ public class UserController {
         ResponseDto responseDto = new ResponseDto();
 
         // 根据验证码token去获取缓存中的验证码，和用户输入的验证码是否一致
-         String imageCode = (String) request.getSession().getAttribute(userDto.getImageCodeToken());
+//         String imageCode = (String) request.getSession().getAttribute(userDto.getImageCodeToken());
 //         String id = (String) request.getSession().getId();
 //        LOG.info("token user:"+id);
 //         String imageCode = (String) request.getSession().getId();
-//        String imageCode = (String) redisTemplate.opsForValue().get(userDto.getImageCodeToken());
-//        LOG.info("从redis中获取到的验证码：{}", imageCode);
+        String imageCode = (String) redisTemplate.opsForValue().get(userDto.getImageCodeToken());
+        LOG.info("从redis中获取到的验证码：{}", imageCode);
         if (StringUtils.isEmpty(imageCode)) {
             responseDto.setSuccess(false);
             responseDto.setMessage("验证码已过期");
@@ -114,11 +117,14 @@ public class UserController {
             return responseDto;
         } else {
             // 验证通过后，移除验证码
-            request.getSession().removeAttribute(userDto.getImageCodeToken());
-//            redisTemplate.delete(userDto.getImageCodeToken());
+//            request.getSession().removeAttribute(userDto.getImageCodeToken());
+            redisTemplate.delete(userDto.getImageCodeToken());
         }
         LoginUserDto loginUserDto = userService.login(userDto);
-        request.getSession().setAttribute(Constants.LOGIN_USER,loginUserDto);
+        String token = UuidUtil.getShortUuid();
+        loginUserDto.setToken(token);
+//        request.getSession().setAttribute(Constants.LOGIN_USER,loginUserDto);
+        redisTemplate.opsForValue().set(token, JSON.toJSONString(loginUserDto), 3600, TimeUnit.SECONDS);
         responseDto.setContent(loginUserDto);
         return responseDto;
     }
@@ -126,11 +132,13 @@ public class UserController {
     /**
      * 退出登录
      */
-    @GetMapping("/logout")
-    public ResponseDto logout(HttpServletRequest request) {
+    @GetMapping("/logout/{token}")
+    public ResponseDto logout(@PathVariable String token) {
 
         ResponseDto responseDto = new ResponseDto();
-        request.getSession().removeAttribute(Constants.LOGIN_USER);
+//        request.getSession().removeAttribute(token);
+        redisTemplate.delete(token);
+        LOG.info("从redis中删除token:{}", token);
         return responseDto;
     }
 }

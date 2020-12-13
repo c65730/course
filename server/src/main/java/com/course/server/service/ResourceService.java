@@ -7,7 +7,6 @@ import com.course.server.dto.ResourceDto;
 import com.course.server.dto.PageDto;
 import com.course.server.mapper.ResourceMapper;
 import com.course.server.util.CopyUtil;
-import com.course.server.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;

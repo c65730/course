@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.util.concurrent.TimeUnit;
 
 
 @RestController
@@ -39,12 +40,11 @@ public class KaptchaController {
             String createText = defaultKaptcha.createText();
 
             // 将生成的验证码放入会话缓存中，后续验证的时候用到
-             request.getSession().setAttribute(imageCodeToken, createText);
+//             request.getSession().setAttribute(imageCodeToken, createText);
 //            String id = request.getSession().getId();
 //            System.out.println("tocken:"+id);
             // 将生成的验证码放入redis缓存中，后续验证的时候用到
-//            redisTemplate.opsForValue().set(imageCodeToken, createText, 300, TimeUnit.SECONDS);
-//            request.getSession().setAttribute(imageCodeToken,createText);
+            redisTemplate.opsForValue().set(imageCodeToken, createText, 300, TimeUnit.SECONDS);
 
             // 使用验证码字符串生成验证码图片
             BufferedImage challenge = defaultKaptcha.createImage(createText);

@@ -406,7 +406,6 @@
             return;
           }
         }
-
         _this.roleUsers.push(user);
       },
 

@@ -30,7 +30,8 @@
     }, {
         "id": "0202", "name": "课程管理", "page": "business/course",
         "children": [
-            {"id": "020201", "name": "增删改查", "request": ["/business/admin/course", "/business/admin/category/all"]}
+            {"id": "020201", "name": "增删改查", "request": ["/business/admin/course", "/business/admin/category/all"]},
+            {"id": "020202", "name": "大章", "request": ["/business/admin/chapter/list"]}
         ]
     }, {
         "id": "0203", "name": "讲师管理", "page": "business/teacher",
